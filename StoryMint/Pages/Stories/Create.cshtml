@@ -1,0 +1,65 @@
+﻿@page
+@model StoryMint.Pages.Stories.CreateModel
+@{
+}
+
+<div class="container" style="max-width:30vw">
+    <h1 class="display-1">StoryMint</h1>
+    <h3>
+        AI Generated stories for everyone!
+    </h3>
+
+    <form method="post" class="mt-5">
+        <div class="mb-3">            
+            <label asp-for="StoryRequest!.Genre" class="form-label"></label>
+            <select class="form-select"
+                    asp-for="StoryRequest!.Genre"
+                    asp-items="Html.GetEnumSelectList<StoryMint.Container.Constants.Genre>()">
+                <option value="">- SELECT -</option>
+            </select>
+            <span asp-validation-for="StoryRequest!.Genre"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="StoryRequest!.Tone" class="form-label"></label>
+            <select class="form-select"
+                    asp-for="StoryRequest!.Tone"
+                    asp-items="Html.GetEnumSelectList<StoryMint.Container.Constants.Tone>()">
+                <option value="">- SELECT -</option>
+            </select>
+            <span asp-validation-for="StoryRequest!.Tone"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="StoryRequest!.AgeGroup" class="form-label"></label>
+            <select class="form-select"
+                    asp-for="StoryRequest!.AgeGroup"
+                    asp-items="StoryMint.Container.Constants.AgeGroups">
+                <option value="">- SELECT -</option>
+            </select>
+            <span asp-validation-for="StoryRequest!.AgeGroup"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="StoryRequest!.Description" class="form-label"></label>
+            <textarea asp-for="StoryRequest!.Description" class="form-control"></textarea>
+            <span asp-validation-for="StoryRequest!.Description"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div asp-validation-summary="All" class="invalid-feedback" style="@(ModelState.IsValid?"":"display:block")"></div>
+    </form>
+</div>
+
+@if (Model.StoryCreated != null)
+{
+    <div class="container">
+        <img class="rounded mx-auto img-fluid" alt="Story Cover Image" href="@Model.StoryCreated.CoverImage" />
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">
+            @Model.StoryCreated.Title
+        </h3>
+        <div class="m-4">
+            @Model.StoryCreated.Content
+        </div>
+    </div>
+}

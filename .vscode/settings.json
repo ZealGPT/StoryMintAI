@@ -1,0 +1,13 @@
+{
+    "dotnetAcquisitionExtension.enableTelemetry": false,
+    "explorer.excludeGitIgnore": true,
+    "git.autofetch": "all",
+    "git.rememberPostCommitCommand": true,
+    "git.autoStash": true,
+    "git.enableSmartCommit": true,
+    "git.pruneOnFetch": true,
+    "files.exclude": {
+        "**/node_modules": true
+    },
+    "git.postCommitCommand": "push"
+}

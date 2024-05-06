@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-dotnettools.csharp",
+    "ms-azuretools.vscode-docker",
+    "visualstudioexptteam.vscodeintellicode",
+    "streetsidesoftware.code-spell-checker",
+    "editorconfig.editorconfig",
+    "visualstudioexptteam.intellicode-api-usage-examples",
+    "ecmel.vscode-html-css"
+  ]
+}
