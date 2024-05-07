@@ -17,12 +17,11 @@
                 {
                     if (media.Type == Container.Domain.MediaType.Audio)
                     {
-                        <a href="@media.Path">Audio - @media.Voice</a>
+                        <a href="@media.Path" class="m-5">Audio</a>
                     }
-
                     if (media.Type == Container.Domain.MediaType.Image)
                     {
-                        <a href="@media.Path">Audio - @media.Dimension</a>
+                        <a href="@media.Path" class="m-5">Image</a>
                     }
                 }
             }
