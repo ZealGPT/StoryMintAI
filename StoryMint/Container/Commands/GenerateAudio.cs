@@ -46,6 +46,7 @@ public class GenerateAudioHandler(ILogger<GenerateAudioHandler> logger, Applicat
                 await File.WriteAllBytesAsync(mediaPath, audioContent.Data?.ToArray()!, cancellationToken: cancellationToken);
             }
 
+            media.Path = mediaPath.Replace("wwwroot", string.Empty);
             await DbContext.AddAsync(media, cancellationToken);
             await DbContext.SaveChangesAsync(cancellationToken);
         }

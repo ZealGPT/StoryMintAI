@@ -58,6 +58,7 @@ public class GenerateImageHandler(ILogger<GenerateImageHandler> logger, Applicat
                     var imageBytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
                     await File.WriteAllBytesAsync(mediaPath, imageBytes, cancellationToken);
 
+                    media.Path = mediaPath.Replace("wwwroot", string.Empty);
                     await DbContext.AddAsync(media, cancellationToken);
                     await DbContext.SaveChangesAsync(cancellationToken);
                 }
