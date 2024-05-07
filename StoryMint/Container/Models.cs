@@ -159,4 +159,6 @@ public record CreateStory(
     Constants.Genre Genre,
     Constants.Tone Tone);
 
-public record StoryCreated(Guid Id, string Title, string Description, string Content, string CoverImage);
+public record StoryCreated(Guid Id, string Title, string Description, string Content);
+
+public record StoryOutput(string Title, string ImageDescription, string Content);

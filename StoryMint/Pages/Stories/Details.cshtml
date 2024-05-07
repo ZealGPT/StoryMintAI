@@ -1,0 +1,31 @@
+﻿@page "{id:guid}"
+@model StoryMint.Pages.Stories.DetailsModel
+@{
+    
+}
+<div class="container">
+    <h2 class="display-3">@Model.Story?.Title</h2>
+    <section>
+        @Model.Story?.Content
+    </section>
+
+    @if(Model.Story?.Media?.Count > 0)
+    {
+        <section>
+            @{
+                foreach (var media in Model.Story.Media)
+                {
+                    if (media.Type == Container.Domain.MediaType.Audio)
+                    {
+                        <a href="@media.Path">Audio - @media.Voice</a>
+                    }
+
+                    if (media.Type == Container.Domain.MediaType.Image)
+                    {
+                        <a href="@media.Path">Audio - @media.Dimension</a>
+                    }
+                }
+            }
+        </section>
+    }    
+</div>

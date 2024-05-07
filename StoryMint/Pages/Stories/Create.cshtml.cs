@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StoryMint.Container;
@@ -6,7 +7,7 @@ using StoryMint.Container;
 namespace StoryMint.Pages.Stories;
 
 [Authorize]
-public class CreateModel(AiService aiService) : PageModel
+public class CreateModel(UserManager<IdentityUser> UserManager, AiService aiService) : PageModel
 {
     private readonly AiService _aiService = aiService;
 
@@ -30,13 +31,12 @@ public class CreateModel(AiService aiService) : PageModel
             ModelState.AddModelError("", "Please fill form and submit again!");
             return Page();
         }
-
-        var story = await _aiService.CreateStory(StoryRequest);
+        var user = await UserManager.GetUserAsync(User);
+        var story = await _aiService.CreateStory(StoryRequest, user!);
 
         if (story.IsSuccess)
-        {            
-            StoryCreated = story;
-            return Page();
+        {
+            return RedirectToPage("./Details", new { Id = story.Value });
         }
 
         ModelState.AddModelError("", story.Errors.FirstOrDefault() ?? "Failed to create Story, please try again!");

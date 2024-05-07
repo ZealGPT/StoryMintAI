@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StoryMint.Container.Domain;
 
 namespace StoryMint.Data
 {
@@ -9,5 +10,7 @@ namespace StoryMint.Data
             : base(options)
         {
         }
+
+        public DbSet<Story> Stories { get; set; }
     }
 }

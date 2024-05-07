@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel.Connectors.Sqlite;
+using Microsoft.SemanticKernel.Memory;
+using Microsoft.SemanticKernel.Plugins.Memory;
 using StoryMint.Container;
 using StoryMint.Data;
 using System.Globalization;
@@ -66,17 +70,37 @@ builder.Services.AddTransient(sp =>
          configuration.GetValue<string>("AzureOpenAI:TextToImage:ApiKey")!
         );
 
+    kernelBuilder.Services.AddAzureOpenAITextToAudio(
+         configuration.GetValue<string>("AzureOpenAI:TextToAudio:DeploymentName")!,
+         configuration.GetValue<string>("AzureOpenAI:TextToAudio:Endpoint")!,
+         configuration.GetValue<string>("AzureOpenAI:TextToAudio:ApiKey")!
+        );
+
+    kernelBuilder.Services.AddAzureOpenAIAudioToText(
+         configuration.GetValue<string>("AzureOpenAI:AudioToText:DeploymentName")!,
+         configuration.GetValue<string>("AzureOpenAI:AudioToText:Endpoint")!,
+         configuration.GetValue<string>("AzureOpenAI:AudioToText:ApiKey")!
+        );
+
     var kernel = kernelBuilder.Build();
+
+    kernel.PromptRenderFilters.Add(new PromptFilter());
+
     return kernel;
 });
 builder.Services.AddSingleton<IPromptRenderFilter, PromptFilter>();
 builder.Services.AddTransient<AiService>();
+builder.Services.AddMediatR(options => { 
+    options.RegisterServicesFromAssemblyContaining<Program>();
+});
 
 builder.Services.AddProblemDetails(options =>
     options.CustomizeProblemDetails = ctx => ctx.ProblemDetails.Extensions.Add("nodeId", Environment.MachineName));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+app.UseStatusCodePages();
+app.UseForwardedHeaders();
 
 if (app.Environment.IsDevelopment())
 {
